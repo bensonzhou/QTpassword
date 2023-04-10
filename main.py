@@ -20,6 +20,14 @@ class mypasswordgenerator(Ui_passwordgenerator, QDialog):
 
     def new_password(self):
         target = self.lineEdit_target.text()
+        username = self.lineEdit_username.text()
+        if not username:
+            username_result = random.sample((string.ascii_uppercase
+                                             + string.ascii_lowercase
+                                             + string.digits
+                                             ), int(self.spinBox_count.text()))
+            self.lineEdit_username.setText(''.join(username_result))
+            username = self.lineEdit_username.text()
         if not target:
             QMessageBox.warning(self, "信息提示", "请输入目标站点，以便保存！")
         words = []
@@ -47,7 +55,7 @@ class mypasswordgenerator(Ui_passwordgenerator, QDialog):
         date = datetime.datetime.now()
         print(date)
         with open('密码记录.txt', "a", encoding='utf-8') as f:
-            f.write(f"目标站点：{target}\t\t\t密码：{password}\t\t\t\t生成日期：{date}\n")
+            f.write(f"目标站点：{target}\t\t\t用户名：{username}\t\t\t密码：{password}\t\t\t\t生成日期：{date}\n")
 
 
 # 按间距中的绿色按钮以运行脚本。
